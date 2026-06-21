@@ -27,7 +27,50 @@ const politicaCSP = [
 ].join("; ");
 
 const nextConfig: NextConfig = {
-  transpilePackages: ["three"]
+  transpilePackages: ["three"],
+
+  // Remove o header "X-Powered-By: Next.js" — não expõe a stack
+  poweredByHeader: false,
+
+  // Notifica o browser quando há um novo deploy disponível
+  // O Next.js vai mostrar um aviso e recarregar automaticamente
+  onDemandEntries: {
+    // Mantém páginas em memória por mais tempo em dev
+    maxInactiveAge: 60 * 1000,
+  },
+
+  // Garante que o cliente detecte novo deploy e recarregue
+  experimental: {
+    staleTimes: {
+      dynamic: 0,
+    },
+  },
+
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          // Mantido por compatibilidade com browsers antigos (Chrome <40, IE)
+          // frame-ancestors no CSP cobre os modernos
+          { key: "X-Frame-Options", value: "DENY" },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          // camera=(self) necessário para QR code na página de validação
+          {
+            key: "Permissions-Policy",
+            value: "camera=(self), microphone=(), geolocation=()",
+          },
+          { key: "Content-Security-Policy", value: politicaCSP },
+          // HSTS: força HTTPS por 1 ano — ignorado em HTTP (localhost)
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=31536000; includeSubDomains",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
