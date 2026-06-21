@@ -1,26 +1,43 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Paleta baseada na logo — tons metálicos/prata */
+  --cor-primaria: #000000;
+  --cor-secundaria: #0f0f0f;
+  --cor-prata: #EAEAEC;
+  --cor-prata-media: #AFAFAF;
+  --cor-prata-escura: #5A5A5A;
+  --cor-prata-hover: #d0d0d2;
+
+  /* Acentos bandeira italiana — uso pontual */
+  --cor-verde: #366C20;
+  --cor-vermelho: #97150F;
+
+  /* Texto */
+  --cor-texto: #EAEAEC;
+  --cor-texto-muted: #8a8a8a;
+
+  /* Bordas */
+  --cor-borda: #252525;
+
+  /* Aliases de compatibilidade — mantidos para páginas do painel/admin */
+  --cor-dourada: #EAEAEC;
+  --cor-dourada-clara: #AFAFAF;
+  --cor-dourada-hover: #d0d0d2;
+
+  --fonte-titulo: "Space Grotesk", system-ui, sans-serif;
+  --fonte-corpo: "Inter", system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--cor-primaria);
+  color: var(--cor-texto);
+}
+
+::selection {
+  background: rgba(234, 234, 236, 0.15);
 }
